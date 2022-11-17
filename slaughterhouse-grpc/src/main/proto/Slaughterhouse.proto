@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "via.sdj3.grpcspringbootx.protobuf";
+
+// service definitions
+service Slaughterhouse {
+  rpc getAnimalIdsOfProduct(RequestAnimalsInProduct) returns(ResponseAnimalsInProduct);
+  rpc getProductIdsWithAnimal(RequestProductsWithAnimal) returns(ResponseProductsWithAnimal);
+}
+
+message RequestAnimalsInProduct {
+  uint32 id = 1;
+}
+
+message ResponseAnimalsInProduct {
+  repeated uint32 animal_ids = 1;
+}
+
+message RequestProductsWithAnimal {
+  uint32 id = 1;
+}
+
+message ResponseProductsWithAnimal {
+  repeated uint32 product_ids = 1;
+}

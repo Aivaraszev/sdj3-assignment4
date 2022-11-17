@@ -1,0 +1,13 @@
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/client/TextConverterClient.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/ResponseAnimalsInProduct.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/ResponseAnimalsInProductOrBuilder.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/service/SlaughterhouseImpl.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/RequestAnimalsInProduct.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/ResponseProductsWithAnimal.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/RequestProductsWithAnimalOrBuilder.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/SlaughterhouseGrpc.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/ResponseProductsWithAnimalOrBuilder.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/RequestAnimalsInProductOrBuilder.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/SlaughterhouseOuterClass.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/GrpcSpringbootXApplication.java
+/home/wiktor/Workspace/maven_playground/sdj3/slaughterhouse-grpc/src/main/java/via/sdj3/grpcspringbootx/protobuf/RequestProductsWithAnimal.java
