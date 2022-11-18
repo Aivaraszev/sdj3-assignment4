@@ -12,7 +12,7 @@ public class AnimalPart {
     private float weight;
     private String type;
     @ManyToOne
-    @JoinColumn(name="ANIMAL_ID", referencedColumnName = "REG_NUMBER")
+    @JoinColumn(name="ANIMAL_ID", referencedColumnName = "REG_NUMBER", nullable = false)
     private Animal animal;
 
     @ManyToOne
@@ -28,8 +28,8 @@ public class AnimalPart {
 
     }
 
-    public AnimalPart(Long partId, float weight, String type, Animal animal) {
-        this.partId = partId;
+
+    public AnimalPart(float weight, String type, Animal animal) {
         this.weight = weight;
         this.type = type;
         this.animal = animal;
