@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import via.sdj3.grpcspringbootx.domain.AnimalPart;
 import via.sdj3.grpcspringbootx.domain.Product;
 import via.sdj3.grpcspringbootx.domain.Tray;
+import via.sdj3.grpcspringbootx.repository.AnimalPartRepository;
 import via.sdj3.grpcspringbootx.repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -13,13 +14,17 @@ import java.util.Random;
 public class ProductLogic {
 
     private final ProductRepository productRepository;
+    private final AnimalPartRepository animalPartRepository;
 
-    public ProductLogic(ProductRepository productRepository) {
+    public ProductLogic(ProductRepository productRepository, AnimalPartRepository animalPartRepository) {
         products = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            products.add(new Product());
+            Product p = new Product();
+            products.add(p);
+            productRepository.save(p);
         }
         this.productRepository = productRepository;
+        this.animalPartRepository = animalPartRepository;
     }
 
     private final List<Product> products;
@@ -28,16 +33,19 @@ public class ProductLogic {
         for (AnimalPart ap : t.getAnimalPartList()) {
             int id = new Random().nextInt(5);
             products.get(id).addAnimalParts(ap.getPartId());
+            ap.setProductId(products.get(id).getProductId());
+            animalPartRepository.save(ap);
             if (products.get(id).getAnimalPartList().size() > 5) {
                 send(products.get(id));
                 products.remove(id);
-                products.add(new Product());
+                Product p = new Product();
+                products.add(p);
+                productRepository.save(p);
             }
         }
     }
 
     public void send(Product product) {
         System.out.println("FINISHED" + product);
-        productRepository.save(product);
     }
 }
