@@ -2,6 +2,8 @@ package via.sdj3.application;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.graph.GraphAdapterBuilder;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -91,7 +93,10 @@ public class AnimalPartLogic {
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            String message = new Gson().toJson(tray);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            new GraphAdapterBuilder().addType(Tray.class).registerOn(gsonBuilder);
+            Gson gson = gsonBuilder.create();
+            String message = gson.toJson(tray);
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
             System.out.println(" [x] Sent '" + message + "'");
         } catch (IOException | TimeoutException e) {

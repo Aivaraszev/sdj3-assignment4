@@ -1,6 +1,8 @@
 package via.sdj3.grpcspringbootx;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.graph.GraphAdapterBuilder;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -45,7 +47,10 @@ public class GrpcSpringbootXApplication {
 
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                Tray tray = new Gson().fromJson(message, Tray.class);
+                GsonBuilder gsonBuilder = new GsonBuilder();
+                new GraphAdapterBuilder().addType(Tray.class).registerOn(gsonBuilder);
+                Gson gson = gsonBuilder.create();
+                Tray tray = gson.fromJson(message, Tray.class);
                 System.out.println(" [x] Received '" + tray + "'");
                 logic.putAnimalPartsToProducts(tray);
             };
