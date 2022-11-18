@@ -61,6 +61,8 @@ public class AnimalPartLogic {
             for (Tray t : trayList) {
                 if (t.getAnimalPartType().equals(ap.getType())) {
                     if (t.getCapacity() >= t.getTotalWeight() + ap.getWeight()) {
+                        ap.setTrayId(t.getTrayId());
+                        animalPartRepository.save(ap);
                         t.addAnimalPart(ap);
                     } else {
                         sendTray(t);
