@@ -1,7 +1,9 @@
 package via.sdj3.grpcspringbootx.service;
 
+import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import via.sdj3.grpcspringbootx.protobuf.*;
 import via.sdj3.grpcspringbootx.repository.AnimalRepository;
 import via.sdj3.grpcspringbootx.repository.ProductRepository;
 
