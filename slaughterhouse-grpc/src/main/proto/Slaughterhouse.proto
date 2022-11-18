@@ -10,17 +10,17 @@ service Slaughterhouse {
 }
 
 message RequestAnimalsInProduct {
-  uint32 id = 1;
+  uint64 id = 1;
 }
 
 message ResponseAnimalsInProduct {
-  repeated uint32 animal_ids = 1;
+  repeated uint64 animal_ids = 1;
 }
 
 message RequestProductsWithAnimal {
-  uint32 id = 1;
+  uint64 id = 1;
 }
 
 message ResponseProductsWithAnimal {
-  repeated uint32 product_ids = 1;
+  repeated uint64 product_ids = 1;
 }

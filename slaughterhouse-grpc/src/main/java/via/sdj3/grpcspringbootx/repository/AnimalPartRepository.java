@@ -8,4 +8,7 @@ import via.sdj3.grpcspringbootx.domain.AnimalPart;
 @Repository
 @Service
 public interface AnimalPartRepository extends CrudRepository<AnimalPart, Long> {
+
+
+
 }

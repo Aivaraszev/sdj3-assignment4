@@ -1,12 +1,8 @@
 package via.sdj3.grpcspringbootx.service;
 
-import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import via.sdj3.grpcspringbootx.dao.SQLAnimalDao;
-import via.sdj3.grpcspringbootx.dao.SQLProductDao;
-import via.sdj3.grpcspringbootx.protobuf.*;
+import via.sdj3.grpcspringbootx.repository.AnimalRepository;
 import via.sdj3.grpcspringbootx.repository.ProductRepository;
 
 import java.util.List;
@@ -14,12 +10,17 @@ import java.util.List;
 @GRpcService
 public class SlaughterhouseImpl extends SlaughterhouseGrpc.SlaughterhouseImplBase {
 
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    AnimalRepository animalRepository;
+
     @Override
     public void getAnimalIdsOfProduct(RequestAnimalsInProduct request, StreamObserver<ResponseAnimalsInProduct> responseObserver) {
         ResponseAnimalsInProduct.Builder response = ResponseAnimalsInProduct.newBuilder();
 
         try {
-            List<Integer> animalIds = SQLProductDao.getInstance().getIdsOfAnimals(request.getId());
+            List<Long> animalIds = animalRepository.findAllAnimalsByProductId(request.getId());
             response.addAllAnimalIds(animalIds);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -34,7 +35,7 @@ public class SlaughterhouseImpl extends SlaughterhouseGrpc.SlaughterhouseImplBas
         ResponseProductsWithAnimal.Builder response = ResponseProductsWithAnimal.newBuilder();
 
         try {
-            List<Integer> productIds = SQLAnimalDao.getInstance().getIdsOfProducts(request.getId());
+            List<Long> productIds = productRepository.findAllProductsByAnimalId(request.getId());
             response.addAllProductIds(productIds);
         } catch (Exception e) {
             System.out.println(e.getMessage());
