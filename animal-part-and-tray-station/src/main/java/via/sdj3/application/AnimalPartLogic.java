@@ -9,7 +9,6 @@ import via.sdj3.domain.Animal;
 import via.sdj3.domain.AnimalPart;
 import via.sdj3.domain.Tray;
 import via.sdj3.repository.AnimalPartRepository;
-import via.sdj3.repository.AnimalRepository;
 import via.sdj3.repository.TrayRepository;
 
 import java.io.IOException;
@@ -22,13 +21,11 @@ public class AnimalPartLogic {
     private final List<Tray> trayList;
     private final TrayRepository trayRepository;
     private final AnimalPartRepository animalPartRepository;
-    private final AnimalRepository animalRepository;
 
-    public AnimalPartLogic(TrayRepository trayRepository, AnimalPartRepository animalPartRepository, AnimalRepository animalRepository) {
+    public AnimalPartLogic(TrayRepository trayRepository, AnimalPartRepository animalPartRepository) {
         trayList = new ArrayList<>();
         this.trayRepository = trayRepository;
         this.animalPartRepository = animalPartRepository;
-        this.animalRepository = animalRepository;
 
     }
 
@@ -50,7 +47,6 @@ public class AnimalPartLogic {
 
     public void processAnimal(Animal animal) {
         List<AnimalPart> animalParts = cutAnimalIntoParts(animal);
-        animalRepository.save(animal);
         putAnimalPartsIntoTrays(animalParts);
     }
 
@@ -61,6 +57,8 @@ public class AnimalPartLogic {
             for (Tray t : trayList) {
                 if (t.getAnimalPartType().equals(ap.getType())) {
                     if (t.getCapacity() >= t.getTotalWeight() + ap.getWeight()) {
+                        ap.setTrayId(t.getTrayId());
+                        animalPartRepository.save(ap);
                         t.addAnimalPart(ap);
                     } else {
                         sendTray(t);

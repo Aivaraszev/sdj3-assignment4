@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import via.sdj3.grpcspringbootx.application.ProductLogic;
 import via.sdj3.grpcspringbootx.domain.Tray;
+import via.sdj3.grpcspringbootx.repository.AnimalPartRepository;
 import via.sdj3.grpcspringbootx.repository.ProductRepository;
 
 import java.io.IOException;
@@ -27,13 +28,15 @@ public class GrpcSpringbootXApplication {
     private final static String QUEUE_NAME = "Trays";
 
     @Autowired
+    private AnimalPartRepository animalPartRepository;
+    @Autowired
     private ProductRepository productRepository;
 
     @Bean
     public void rabbitMqService() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
-        ProductLogic logic = new ProductLogic(productRepository);
+        ProductLogic logic = new ProductLogic(productRepository,animalPartRepository);
         try {
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();

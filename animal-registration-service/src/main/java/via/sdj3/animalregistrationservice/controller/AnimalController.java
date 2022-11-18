@@ -47,7 +47,7 @@ public class AnimalController {
             throw new RuntimeException(e);
         }
 
-        return repository.save(saved);
+        return saved;
     }
 
     @GetMapping(path = "/animals",
