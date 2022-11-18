@@ -13,17 +13,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import via.sdj3.animalregistrationservice.domain.Animal;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 class AnimalRegistrationServiceApplicationTests {
 
     @Test
     void animalStored() throws IOException {
-        Animal an1 = new Animal(9000,"2002-03-03",2424.4F,"Donald");
+        Animal an1 = new Animal(9000, "Deer","2002-03-03",2424.4F,"Donald");
         HttpUriRequest request = new HttpPost( "http://localhost:8080/animals");
 
         ObjectMapper xmlMapper = new XmlMapper();
