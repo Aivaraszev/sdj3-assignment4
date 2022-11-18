@@ -12,12 +12,14 @@ public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long regNumber;
+    private String Type;
     private String storeDate;
     private float weight;
     private String origin;
 
-    public Animal(long regNumber, String storeDate, float weight, String origin) {
+    public Animal(long regNumber, String type, String storeDate, float weight, String origin) {
         this.regNumber = regNumber;
+        Type = type;
         this.storeDate = storeDate;
         this.weight = weight;
         this.origin = origin;
@@ -59,11 +61,20 @@ public class Animal {
         return origin;
     }
 
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
     @Override
     public String toString() {
         return "Animal{" +
                 "regNumber=" + regNumber +
-                ", storeDate=" + storeDate +
+                ", Type='" + Type + '\'' +
+                ", storeDate='" + storeDate + '\'' +
                 ", weight=" + weight +
                 ", origin='" + origin + '\'' +
                 '}';
@@ -74,11 +85,11 @@ public class Animal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Animal animal = (Animal) o;
-        return regNumber == animal.regNumber && Float.compare(animal.weight, weight) == 0 && Objects.equals(storeDate, animal.storeDate) && Objects.equals(origin, animal.origin);
+        return regNumber == animal.regNumber && Float.compare(animal.weight, weight) == 0 && Objects.equals(Type, animal.Type) && Objects.equals(storeDate, animal.storeDate) && Objects.equals(origin, animal.origin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(regNumber, storeDate, weight, origin);
+        return Objects.hash(regNumber, Type, storeDate, weight, origin);
     }
 }
