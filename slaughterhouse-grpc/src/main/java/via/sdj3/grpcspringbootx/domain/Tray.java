@@ -1,6 +1,7 @@
 package via.sdj3.grpcspringbootx.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -12,7 +13,7 @@ public class Tray {
     private String animalPartType;
 
     @OneToMany(mappedBy = "tray")
-    private List<AnimalPart> animalParts;
+    private List<AnimalPart> animalParts = new ArrayList<>();
 
     public Long getTrayId() {
         return trayId;
@@ -43,17 +44,17 @@ public class Tray {
     }
 
     public Tray() {
-
     }
 
     public Tray(String animalPartType, float capacity) {
         this.animalPartType = animalPartType;
         this.capacity = capacity;
     }
-    public double getTotalWeight(){
+
+    public double getTotalWeight() {
         double total = 0;
         for (AnimalPart ap : animalParts) {
-            total+=ap.getWeight();
+            total += ap.getWeight();
         }
         return total;
     }
@@ -61,5 +62,6 @@ public class Tray {
     public void addAnimalPart(AnimalPart ap) {
         animalParts.add(ap);
     }
+
     private float capacity;
 }

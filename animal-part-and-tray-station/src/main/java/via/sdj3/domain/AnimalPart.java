@@ -12,15 +12,15 @@ public class AnimalPart {
     private float weight;
     private String type;
     @ManyToOne
-    @JoinColumn(name="ANIMAL_ID", referencedColumnName = "REG_NUMBER",nullable = false)
+    @JoinColumn(name = "ANIMAL_ID", referencedColumnName = "REG_NUMBER")
     private Animal animal;
 
     @ManyToOne
-    @JoinColumn(name="TRAY_ID", referencedColumnName = "TRAY_ID")
+    @JoinColumn(name = "TRAY_ID", referencedColumnName = "TRAY_ID")
     private Tray tray;
 
     @ManyToOne
-    @JoinColumn(name="PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     private Product product;
 
 
