@@ -3,7 +3,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -12,14 +11,14 @@ public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long regNumber;
-    private String Type;
+    private String type;
     private String storeDate;
     private float weight;
     private String origin;
 
     public Animal(long regNumber, String type, String storeDate, float weight, String origin) {
         this.regNumber = regNumber;
-        Type = type;
+        this.type = type;
         this.storeDate = storeDate;
         this.weight = weight;
         this.origin = origin;
@@ -62,18 +61,18 @@ public class Animal {
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        Type = type;
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "Animal{" +
                 "regNumber=" + regNumber +
-                ", Type='" + Type + '\'' +
+                ", Type='" + type + '\'' +
                 ", storeDate='" + storeDate + '\'' +
                 ", weight=" + weight +
                 ", origin='" + origin + '\'' +
@@ -85,11 +84,11 @@ public class Animal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Animal animal = (Animal) o;
-        return regNumber == animal.regNumber && Float.compare(animal.weight, weight) == 0 && Objects.equals(Type, animal.Type) && Objects.equals(storeDate, animal.storeDate) && Objects.equals(origin, animal.origin);
+        return regNumber == animal.regNumber && Float.compare(animal.weight, weight) == 0 && Objects.equals(type, animal.type) && Objects.equals(storeDate, animal.storeDate) && Objects.equals(origin, animal.origin);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(regNumber, Type, storeDate, weight, origin);
+        return Objects.hash(regNumber, type, storeDate, weight, origin);
     }
 }
