@@ -22,6 +22,10 @@ public class Tray {
         this.trayId = trayId;
     }
 
+    public List<AnimalPart> getAnimalParts() {
+        return animalParts;
+    }
+
     public String getAnimalPartType() {
         return animalPartType;
     }

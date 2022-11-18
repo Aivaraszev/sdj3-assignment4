@@ -1,6 +1,5 @@
 package via.sdj3.grpcspringbootx.application;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import via.sdj3.grpcspringbootx.domain.AnimalPart;
 import via.sdj3.grpcspringbootx.domain.Product;
 import via.sdj3.grpcspringbootx.domain.Tray;
@@ -30,12 +29,12 @@ public class ProductLogic {
     private final List<Product> products;
 
     public void putAnimalPartsToProducts(Tray t) {
-        for (AnimalPart ap : t.getAnimalPartList()) {
+        for (AnimalPart ap : t.getAnimalParts()) {
             int id = new Random().nextInt(5);
-            products.get(id).addAnimalParts(ap.getPartId());
-            ap.setProductId(products.get(id).getProductId());
+            products.get(id).addAnimalParts(ap);
+            ap.setProduct(products.get(id));
             animalPartRepository.save(ap);
-            if (products.get(id).getAnimalPartList().size() > 5) {
+            if (products.get(id).getAnimalParts().size() > 5) {
                 send(products.get(id));
                 products.remove(id);
                 Product p = new Product();
