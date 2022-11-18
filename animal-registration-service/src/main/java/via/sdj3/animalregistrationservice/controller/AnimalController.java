@@ -28,9 +28,6 @@ public class AnimalController {
 
     public AnimalController(AnimalRepository repository) {
         this.repository = repository;
-        this.repository.save(new Animal(1,"Chicken",  "1980-03-03", 35.6F, "Donald farm"));
-        this.repository.save(new Animal(2, "Pig", "2020-03-03", 35.6F, "Pigs and cows"));
-        this.repository.save(new Animal(3,"Cow", "2000-03-03", 35.6F, "Los Pollos Hermanos"));
     }
 
     @PostMapping(path = "/animals",

@@ -1,12 +1,18 @@
 package via.sdj3.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Tray {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trayId;
     private String animalPartType;
-    private final List<AnimalPart> animalPartList;
+
+    @ElementCollection
+    private final List<AnimalPart> animalPartList = new ArrayList<>();
 
     public List<AnimalPart> getAnimalPartList() {
         return animalPartList;
@@ -36,10 +42,13 @@ public class Tray {
         this.capacity = capacity;
     }
 
+    public Tray() {
+
+    }
+
     public Tray(String animalPartType, float capacity) {
         this.animalPartType = animalPartType;
         this.capacity = capacity;
-        animalPartList = new ArrayList<>();
     }
     public double getTotalWeight(){
         double total = 0;

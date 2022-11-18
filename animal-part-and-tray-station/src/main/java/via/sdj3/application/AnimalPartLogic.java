@@ -5,10 +5,12 @@ import com.google.gson.Gson;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import via.sdj3.dao.TrayDao;
 import via.sdj3.domain.Animal;
 import via.sdj3.domain.AnimalPart;
 import via.sdj3.domain.Tray;
+import via.sdj3.repository.AnimalPartRepository;
+import via.sdj3.repository.AnimalRepository;
+import via.sdj3.repository.TrayRepository;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,24 +20,37 @@ import java.util.concurrent.TimeoutException;
 public class AnimalPartLogic {
 
     private final List<Tray> trayList;
-    private final TrayDao trayDao;
-    public AnimalPartLogic() {
+    private final TrayRepository trayRepository;
+    private final AnimalPartRepository animalPartRepository;
+    private final AnimalRepository animalRepository;
+
+    public AnimalPartLogic(TrayRepository trayRepository, AnimalPartRepository animalPartRepository, AnimalRepository animalRepository) {
         trayList = new ArrayList<>();
-        trayDao = new TrayDao();
+        this.trayRepository = trayRepository;
+        this.animalPartRepository = animalPartRepository;
+        this.animalRepository = animalRepository;
+
     }
 
     private List<AnimalPart> cutAnimalIntoParts(Animal animal) {
         List<AnimalPart> list = new ArrayList<>();
-        list.add(new AnimalPart(393, "Leg", animal.getRegNumber()));
-        list.add(new AnimalPart(467, "Loin", animal.getRegNumber()));
-        list.add(new AnimalPart(326, "Ribs", animal.getRegNumber()));
-        list.add(new AnimalPart(591, "Head", animal.getRegNumber()));
-        list.add(new AnimalPart(328, "Belly", animal.getRegNumber()));
+
+        AnimalPart p1 = new AnimalPart(393, "Leg", animal.getRegNumber());
+        list.add(p1);
+        AnimalPart p2 = new AnimalPart(467, "Loin", animal.getRegNumber());
+        list.add(p2);
+        AnimalPart p3 = new AnimalPart(326, "Ribs", animal.getRegNumber());
+        list.add(p3);
+        AnimalPart p4 = new AnimalPart(591, "Head", animal.getRegNumber());
+        list.add(p4);
+        AnimalPart p5 = new AnimalPart(328, "Belly", animal.getRegNumber());
+        list.add(p5);
         return list;
     }
 
     public void processAnimal(Animal animal) {
         List<AnimalPart> animalParts = cutAnimalIntoParts(animal);
+        animalRepository.save(animal);
         putAnimalPartsIntoTrays(animalParts);
     }
 
@@ -50,6 +65,9 @@ public class AnimalPartLogic {
                     } else {
                         sendTray(t);
                         Tray newTray = new Tray(ap.getType(), 2000);
+                        trayRepository.save(newTray);
+                        ap.setTrayId(newTray.getTrayId());
+                        animalPartRepository.save(ap);
                         newTray.addAnimalPart(ap);
                         trayList.add(newTray);
                     }
@@ -59,11 +77,13 @@ public class AnimalPartLogic {
             }
             if (!foundPart) {
                 Tray newTray = new Tray(ap.getType(), 2000);
+                trayRepository.save(newTray);
+                ap.setTrayId(newTray.getTrayId());
+                animalPartRepository.save(ap);
                 newTray.addAnimalPart(ap);
                 trayList.add(newTray);
             }
         }
-
     }
 
     private void sendTray(Tray tray) {
@@ -75,7 +95,6 @@ public class AnimalPartLogic {
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             String message = new Gson().toJson(tray);
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
-            trayDao.saveTray(tray);
             System.out.println(" [x] Sent '" + message + "'");
         } catch (IOException | TimeoutException e) {
             throw new RuntimeException(e);

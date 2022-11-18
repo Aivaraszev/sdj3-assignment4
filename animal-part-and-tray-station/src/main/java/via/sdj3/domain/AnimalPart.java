@@ -1,10 +1,22 @@
 package via.sdj3.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class AnimalPart {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partId;
     private float weight;
     private String type;
     private Long animalId;
+
+    public AnimalPart() {
+
+    }
 
     public AnimalPart(float weight, String type, Long animalId) {
         this.weight = weight;
