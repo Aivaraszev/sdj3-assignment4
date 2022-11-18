@@ -1,4 +1,4 @@
-package via.sdj3.domain;
+package via.sdj3.animalregistrationservice.domain;
 
 import javax.persistence.*;
 import java.util.List;

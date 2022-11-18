@@ -1,16 +1,18 @@
 package via.sdj3.grpcspringbootx.domain;
 
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Tray {
+    @Id
+    @Column(name = "TRAY_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long trayId;
     private String animalPartType;
-    private final List<AnimalPart> animalPartList;
 
-    public List<AnimalPart> getAnimalPartList() {
-        return animalPartList;
-    }
+    @OneToMany(mappedBy = "tray")
+    private List<AnimalPart> animalParts;
 
     public Long getTrayId() {
         return trayId;
@@ -36,21 +38,24 @@ public class Tray {
         this.capacity = capacity;
     }
 
+    public Tray() {
+
+    }
+
     public Tray(String animalPartType, float capacity) {
         this.animalPartType = animalPartType;
         this.capacity = capacity;
-        animalPartList = new ArrayList<>();
     }
     public double getTotalWeight(){
         double total = 0;
-        for (AnimalPart ap : animalPartList) {
+        for (AnimalPart ap : animalParts) {
             total+=ap.getWeight();
         }
         return total;
     }
 
     public void addAnimalPart(AnimalPart ap) {
-        animalPartList.add(ap);
+        animalParts.add(ap);
     }
     private float capacity;
 }

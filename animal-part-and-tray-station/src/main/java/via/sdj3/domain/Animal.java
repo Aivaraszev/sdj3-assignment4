@@ -1,20 +1,22 @@
 package via.sdj3.domain;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 public class Animal {
 
     @Id
+    @Column(name = "REG_NUMBER")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long regNumber;
     private String type;
     private String storeDate;
     private float weight;
     private String origin;
+
+    @OneToMany(mappedBy = "animal")
+    private List<AnimalPart> animalParts;
 
     public Animal(long regNumber, String type, String storeDate, float weight, String origin) {
         this.regNumber = regNumber;
@@ -28,36 +30,12 @@ public class Animal {
 
     }
 
-    public void setRegNumber(long regNumber) {
-        this.regNumber = regNumber;
-    }
-
-    public void setStoreDate(String storeDate) {
-        this.storeDate = storeDate;
-    }
-
-    public void setWeight(float weight) {
-        this.weight = weight;
-    }
-
-    public void setOrigin(String origin) {
-        this.origin = origin;
-    }
-
     public long getRegNumber() {
         return regNumber;
     }
 
-    public String getStoreDate() {
-        return storeDate;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public String getOrigin() {
-        return origin;
+    public void setRegNumber(long regNumber) {
+        this.regNumber = regNumber;
     }
 
     public String getType() {
@@ -68,27 +46,62 @@ public class Animal {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return "Animal{" +
-                "regNumber=" + regNumber +
-                ", Type='" + type + '\'' +
-                ", storeDate='" + storeDate + '\'' +
-                ", weight=" + weight +
-                ", origin='" + origin + '\'' +
-                '}';
+    public String getStoreDate() {
+        return storeDate;
+    }
+
+    public void setStoreDate(String storeDate) {
+        this.storeDate = storeDate;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(String origin) {
+        this.origin = origin;
+    }
+
+    public List<AnimalPart> getAnimalParts() {
+        return animalParts;
+    }
+
+    public void setAnimalParts(List<AnimalPart> animalParts) {
+        this.animalParts = animalParts;
     }
 
     @Override
     public boolean equals(Object o) {
+
+
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Animal animal = (Animal) o;
-        return regNumber == animal.regNumber && Float.compare(animal.weight, weight) == 0 && Objects.equals(type, animal.type) && Objects.equals(storeDate, animal.storeDate) && Objects.equals(origin, animal.origin);
+        return regNumber == animal.regNumber && Float.compare(animal.weight, weight) == 0 && Objects.equals(type, animal.type) && Objects.equals(storeDate, animal.storeDate) && Objects.equals(origin, animal.origin) && Objects.equals(animalParts, animal.animalParts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(regNumber, type, storeDate, weight, origin);
+        return Objects.hash(regNumber, type, storeDate, weight, origin, animalParts);
+    }
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "regNumber=" + regNumber +
+                ", type='" + type + '\'' +
+                ", storeDate='" + storeDate + '\'' +
+                ", weight=" + weight +
+                ", origin='" + origin + '\'' +
+                ", animalParts=" + animalParts +
+                '}';
     }
 }

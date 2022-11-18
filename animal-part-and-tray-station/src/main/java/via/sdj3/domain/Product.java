@@ -1,4 +1,4 @@
-package via.sdj3.grpcspringbootx.domain;
+package via.sdj3.domain;
 
 import javax.persistence.*;
 import java.util.ArrayList;

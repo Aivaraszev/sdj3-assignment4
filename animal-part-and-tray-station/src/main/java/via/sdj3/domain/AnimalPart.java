@@ -1,31 +1,39 @@
 package via.sdj3.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class AnimalPart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long partId;
+
+
     private float weight;
     private String type;
-    private Long animalId;
+    @ManyToOne
+    @JoinColumn(name="ANIMAL_ID", referencedColumnName = "REG_NUMBER")
+    private Animal animal;
+
+    @ManyToOne
+    @JoinColumn(name="TRAY_ID", referencedColumnName = "TRAY_ID")
+    private Tray tray;
+
+    @ManyToOne
+    @JoinColumn(name="PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
+    private Product product;
+
 
     public AnimalPart() {
 
     }
 
-    public AnimalPart(float weight, String type, Long animalId) {
+    public AnimalPart(Long partId, float weight, String type, Animal animal) {
+        this.partId = partId;
         this.weight = weight;
         this.type = type;
-        this.animalId = animalId;
+        this.animal = animal;
     }
-
-    private Long trayId = null;
-    private Long productId = null;
 
     public Long getPartId() {
         return partId;
@@ -51,28 +59,27 @@ public class AnimalPart {
         this.type = type;
     }
 
-    public Long getAnimalId() {
-        return animalId;
+    public Animal getAnimal() {
+        return animal;
     }
 
-    public void setAnimalId(Long animalId) {
-        this.animalId = animalId;
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
     }
 
-    public Long getTrayId() {
-        return trayId;
+    public Tray getTray() {
+        return tray;
     }
 
-    public void setTrayId(Long trayId) {
-        this.trayId = trayId;
+    public void setTray(Tray tray) {
+        this.tray = tray;
     }
 
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
-
 }
