@@ -5,10 +5,13 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import via.sdj3.grpcspringbootx.application.ProductLogic;
 import via.sdj3.grpcspringbootx.domain.Tray;
+import via.sdj3.grpcspringbootx.repository.ProductRepository;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -23,10 +26,14 @@ public class GrpcSpringbootXApplication {
 
     private final static String QUEUE_NAME = "Trays";
 
-    static {
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Bean
+    public void rabbitMqService() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
-        ProductLogic logic = new ProductLogic();
+        ProductLogic logic = new ProductLogic(productRepository);
         try {
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
@@ -45,4 +52,6 @@ public class GrpcSpringbootXApplication {
             throw new RuntimeException(e);
         }
     }
+
+
 }

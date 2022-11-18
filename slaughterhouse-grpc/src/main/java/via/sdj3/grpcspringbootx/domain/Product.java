@@ -1,11 +1,15 @@
 package via.sdj3.grpcspringbootx.domain;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
-
+    @ElementCollection
+    private List<Long> animalPartList;
     public Product() {
         animalPartList = new ArrayList<>();
     }
@@ -18,13 +22,12 @@ public class Product {
         this.productId = productId;
     }
 
-    public void addAnimalParts(AnimalPart ap) {
-        animalPartList.add(ap);
+    public void addAnimalParts(Long partId) {
+        animalPartList.add(partId);
     }
 
-    public List<AnimalPart> getAnimalPartList() {
+    public List<Long> getAnimalPartList() {
         return animalPartList;
     }
 
-    private final List<AnimalPart> animalPartList;
 }

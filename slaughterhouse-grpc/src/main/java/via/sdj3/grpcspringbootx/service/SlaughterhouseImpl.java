@@ -2,14 +2,18 @@ package via.sdj3.grpcspringbootx.service;
 
 import io.grpc.stub.StreamObserver;
 import org.lognet.springboot.grpc.GRpcService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import via.sdj3.grpcspringbootx.dao.SQLAnimalDao;
 import via.sdj3.grpcspringbootx.dao.SQLProductDao;
 import via.sdj3.grpcspringbootx.protobuf.*;
+import via.sdj3.grpcspringbootx.repository.ProductRepository;
 
 import java.util.List;
 
 @GRpcService
 public class SlaughterhouseImpl extends SlaughterhouseGrpc.SlaughterhouseImplBase {
+
     @Override
     public void getAnimalIdsOfProduct(RequestAnimalsInProduct request, StreamObserver<ResponseAnimalsInProduct> responseObserver) {
         ResponseAnimalsInProduct.Builder response = ResponseAnimalsInProduct.newBuilder();
