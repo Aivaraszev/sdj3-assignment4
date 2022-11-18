@@ -5,6 +5,9 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import via.sdj3.application.AnimalPartLogic;
 import via.sdj3.domain.Animal;
 
@@ -12,15 +15,23 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeoutException;
 
-public class Main {
+@SpringBootApplication
+public class AnimalPartAndTrayApplication {
+
     private final static String QUEUE_NAME = "Animals";
 
     public static void main(String[] args) {
+        SpringApplication.run(AnimalPartAndTrayApplication.class, args);
+    }
+
+    @Bean
+    public void rabbitMqListener() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("localhost");
         AnimalPartLogic logic = new AnimalPartLogic();
-        try{ Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel();
+        try {
+            Connection connection = factory.newConnection();
+            Channel channel = connection.createChannel();
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
@@ -31,7 +42,8 @@ public class Main {
             };
             channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {
             });
-        } catch (IOException | TimeoutException e) {
+        } catch (IOException |
+                 TimeoutException e) {
             throw new RuntimeException(e);
         }
     }
