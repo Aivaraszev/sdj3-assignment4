@@ -32,15 +32,15 @@ public class AnimalPartLogic {
     private List<AnimalPart> cutAnimalIntoParts(Animal animal) {
         List<AnimalPart> list = new ArrayList<>();
 
-        AnimalPart p1 = new AnimalPart(393, "Leg", animal.getRegNumber());
+        AnimalPart p1 = new AnimalPart(393, "Leg", animal);
         list.add(p1);
-        AnimalPart p2 = new AnimalPart(467, "Loin", animal.getRegNumber());
+        AnimalPart p2 = new AnimalPart(467, "Loin", animal);
         list.add(p2);
-        AnimalPart p3 = new AnimalPart(326, "Ribs", animal.getRegNumber());
+        AnimalPart p3 = new AnimalPart(326, "Ribs", animal);
         list.add(p3);
-        AnimalPart p4 = new AnimalPart(591, "Head", animal.getRegNumber());
+        AnimalPart p4 = new AnimalPart(591, "Head", animal);
         list.add(p4);
-        AnimalPart p5 = new AnimalPart(328, "Belly", animal.getRegNumber());
+        AnimalPart p5 = new AnimalPart(328, "Belly", animal);
         list.add(p5);
         return list;
     }
@@ -57,14 +57,14 @@ public class AnimalPartLogic {
             for (Tray t : trayList) {
                 if (t.getAnimalPartType().equals(ap.getType())) {
                     if (t.getCapacity() >= t.getTotalWeight() + ap.getWeight()) {
-                        ap.setTrayId(t.getTrayId());
+                        ap.setTray(t);
                         animalPartRepository.save(ap);
                         t.addAnimalPart(ap);
                     } else {
                         sendTray(t);
                         Tray newTray = new Tray(ap.getType(), 2000);
                         trayRepository.save(newTray);
-                        ap.setTrayId(newTray.getTrayId());
+                        ap.setTray(newTray);
                         animalPartRepository.save(ap);
                         newTray.addAnimalPart(ap);
                         trayList.add(newTray);
@@ -76,7 +76,7 @@ public class AnimalPartLogic {
             if (!foundPart) {
                 Tray newTray = new Tray(ap.getType(), 2000);
                 trayRepository.save(newTray);
-                ap.setTrayId(newTray.getTrayId());
+                ap.setTray(newTray);
                 animalPartRepository.save(ap);
                 newTray.addAnimalPart(ap);
                 trayList.add(newTray);
